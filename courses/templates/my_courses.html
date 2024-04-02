@@ -1,0 +1,77 @@
+{% extends "basic.html" %}
+
+{%block title%} Sign Up {%endblock%}
+
+
+
+{% load simple_tag %}
+{% load filter_currency %}
+{% load enroll %}
+<style>
+    {
+        % block CSS %
+    }
+
+    #ls {
+        overflow-y: scroll;
+    }
+
+    .myactive {
+        background-color: peru;
+    }
+
+    a {
+        color: gray
+    }
+
+    a:hover {
+        color: gray
+    }
+
+        {
+        % endblock %
+    }
+</style>
+
+{% block body %}
+<div class="container my-4">
+    <!-- <div class="p-4 m-4">
+        <div class=" col-lg-5 mx-auto"> -->
+    <h3 class="text-primary text-center">Course Detail</h3>
+    <hr>
+
+
+    <div class="row mt-5">
+
+        {% for i in all_courses %}
+        <div class="col">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img class="card-img-top" src="{{i.course.thumbnail.url}}" style="width: 100%; height: 200px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{i.course.name}}</h5>
+
+                </div>
+                <div class="card-footer ">
+
+                    <div class="row">
+
+                        <a href="/course/{{i.course.slug}}" class="btn btn-primary  mx-auto">Start Course</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block JS %}
+
+
+</script>
+{% endblock %}

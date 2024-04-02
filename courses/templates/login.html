@@ -1,0 +1,44 @@
+{% extends "basic.html" %}
+
+{%block title%} login {%endblock%}
+
+{% block body %}
+<div class="container my-4">
+    <div class="p-4 m-4">
+    <div class=" col-lg-5 mx-auto">
+        <h3 class="text-primary text-center">Login Here</h3>
+        
+        <b><hr></b>
+        <br>
+        
+    <form method="post">{% csrf_token %}
+        
+        <div class="form-group">
+            <label for="fname">Name</label>
+            <input type="text" class="form-control" id="name" name = "name" 
+                placeholder="Enter Name" >
+        </div>
+ 
+        <div class="form-group">
+            <label for="pass">Password</label>
+            <input type="password" class="form-control" id="pass" name = "pass"  placeholder="Password" required>
+        </div>
+        <button type = "submit" class = "btn btn-primary">Create An Account</button>
+
+    </form>
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block JS %}
+<script>
+{% if msg|length  %}
+   alert('{{msg}}');
+   window.location = '/'
+{% endif %}
+
+
+</script>
+{% endblock %}

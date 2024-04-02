@@ -1,0 +1,159 @@
+{% extends "basic.html" %}
+
+{% block title %} course page {% endblock %}
+
+{% load simple_tag %}
+{% load filter_currency %}
+{% load video_no %}
+
+
+<style>
+    {% block CSS %}
+
+    #ls{
+        overflow-y: scroll;
+    }
+    .myactive{
+        background-color:peru;
+    }
+    a{
+        color:gray
+    }
+    a:hover{
+        color:gray
+    }
+    .mr
+    {
+        margin-left: 80%;
+
+    }
+
+    {% endblock %}
+    
+</style>
+
+
+{% block body %}
+
+<div class="container-fluid m-4">
+    <div class="card">
+        <div class="row m-4">
+
+            <div class="col-md-8 ">
+                <iframe id="player" class="mx-auto" width="100%" height="315"
+                    src="https://www.youtube.com/embed/{{video.video_id}}" title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+                
+                
+                <a href="?lecture={{video.serial_number|video_no_prev}}" class="previous ml text-primary">&laquo; Previous</a>
+                <a href="?lecture={{video.serial_number|video_no_next}}" class="next mr text-primary">Next &raquo;</a>
+                
+            </div>
+            <div class="col-4 ">
+                <ul class="list-group m-4 text-center" id = "ls">
+
+                    {% for c in videos %}
+                    <li class="list-group-item  {% if c == video %} myactive {% endif %} "> <a href="?lecture={{c.serial_number}}">{{c}}</a></li>
+                  
+                    
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- course detail -->
+
+    <div class="card mt-2 ">
+        <div class="row mx-4">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">{{course.name}}</h5>
+                    <p class="card-text">{{course.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Prerequisite detail -->
+
+    <div class="card mt-2 ">
+        <div class="row mx-4">
+            <div>
+                <div class="card-body ">
+                    <h5 class="card-title">Prerequisite</h5>
+                    <p class="card-text">
+                    <ol>
+                        {% for p in course.prerequisite_set.all %}
+                        <li>
+                            {{p}}
+                        </li>
+
+                        {% endfor %}
+                    </ol>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Learning  detail -->
+    <div class="card mt-2 ">
+        <div class="row mx-4">
+            <div>
+                <div class="card-body ">
+                    <h5 class="card-title">Learning</h5>
+                    <p class="card-text">
+                    <ol>
+                        {% for p in course.learning_set.all %}
+                        <li>
+                            {{p}}
+                            
+                        </li>
+
+                        {% endfor %}
+                    </ol>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block JS %}
+<script>
+
+    var player;
+    var  video_list;
+    // window.onload=()=>{
+    // player = document.getElementById("player")
+    // ratioMaintain();
+
+    // }
+    document.onreadystatechange = function () {
+        // console.log(document.readyState);
+        if (document.readyState == 'interactive') {
+            player = document.getElementById("player")
+            video_list= document.getElementById('ls')
+            ratioMaintain();
+
+        }
+    }
+
+    window.onresize = ratioMaintain
+
+    function ratioMaintain() {
+        var w = player.clientWidth
+        var h = (w * 9) / 16 //youtube ka ratio 9/16 
+        player.height = h
+        video_list.style.maxHeight = h + 'px'
+
+
+    }
+    window.onresize = ratioMaintain
+
+   
+</script>
+{% endblock %}
+{% endblock %}
